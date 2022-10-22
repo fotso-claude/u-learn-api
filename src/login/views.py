@@ -9,7 +9,7 @@ from .serializers import UserSerializer
 
 # Create your views here.
 @api_view(['GET'])
-def user_list(request):
+def user_list(request, format=None):
     # Get all the users Serialize them and return JSON
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
@@ -18,6 +18,7 @@ def user_list(request):
 
 @api_view(['POST'])
 def user_create(request):
+    """ Create a user """
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -25,7 +26,7 @@ def user_create(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def user_detail(request, id: int):
+def user_detail(request, id: int, format=None):
     try:
         user = User.objects.get(pk=id)
     except User.DoesNotExist:

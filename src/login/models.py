@@ -8,7 +8,10 @@ class User(models.Model):
         STUDENT = 3
 
     name = models.CharField(max_length=200)
-    email = models.EmailField(max_length=100)
+    email = models.EmailField(
+        max_length=100,
+        unique=True
+    )
     password = models.CharField(max_length=255)
     role = models.IntegerField(
         choices=Role.choices,
