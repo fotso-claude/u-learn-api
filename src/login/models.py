@@ -4,18 +4,17 @@ from django.db import models
 
 
 class User(models.Model):
-    class Role(Enum):
+    class Role(models.IntegerChoices):
         ADMIN = 1
         TEACHER = 2
         STUDENT = 3
 
-    user_id = models.IntegerField(max_length=10)
-    name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255)
+    user_id = models.IntegerField()
+    name = models.CharField(max_length=200)
+    email = models.EmailField(max_length=100)
     password = models.CharField(max_length=255)
     role = models.IntegerField(
-        max_length=1,
-        choices=Role,
+        choices=Role.choices,
         default=Role.STUDENT
     )
 
