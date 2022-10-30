@@ -6,7 +6,7 @@ from knox.views import LoginView as KnoxLoginView
 from rest_framework.response import Response
 
 
-from .serializers import UserSerializer, RegisterSerializer
+from .serializers import RegisterSerializer, AuthSerializer
 
 
 # Register API
@@ -20,7 +20,7 @@ class RegisterAPI(generics.GenericAPIView):
         user.password = make_password(user.password)
         user.save()
         return Response({
-            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "user": AuthSerializer(user, context=self.get_serializer_context()).data,
             #  "token": AuthToken.objects.create(user)[1]
         })
 
