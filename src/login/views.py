@@ -1,48 +1,36 @@
-from django.http import JsonResponse
-from rest_framework import status
-from rest_framework.decorators import api_view
+from django.contrib.auth import login
+from django.contrib.auth.hashers import make_password
+from rest_framework import generics, permissions
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from knox.views import LoginView as KnoxLoginView
 from rest_framework.response import Response
 
-from .models import User
-from .serializers import UserSerializer
+
+from .serializers import UserSerializer, RegisterSerializer
 
 
-# Create your views here.
-@api_view(['GET'])
-def user_list(request, format=None):
-    # Get all the users Serialize them and return JSON
-    users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
-    return Response(serializer.data)
+# Register API
+class RegisterAPI(generics.GenericAPIView):
+    serializer_class = RegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        user.password = make_password(user.password)
+        user.save()
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            #  "token": AuthToken.objects.create(user)[1]
+        })
 
 
-@api_view(['POST'])
-def user_create(request):
-    """ Create a user """
-    serializer = UserSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+class LoginAPI(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
 
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def user_detail(request, id: int, format=None):
-    try:
-        user = User.objects.get(pk=id)
-    except User.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-
-    if request.method == 'PUT':
-        serializer = UserSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_408_REQUEST_TIMEOUT)
-
-    if request.method == 'DELETE':
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(LoginAPI, self).post(request, format=None)
