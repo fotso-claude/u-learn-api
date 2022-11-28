@@ -25,6 +25,6 @@ from training.urls import router
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/', include("login.urls")),
-    path('api/content/', include(router.urls)),
+    path('api/', include(router.urls)),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

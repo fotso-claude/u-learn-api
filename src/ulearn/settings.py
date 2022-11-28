@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     #  ------- libraries added
     'rest_framework',
     'knox',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -141,6 +142,11 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.SessionAuthentication',
         'knox.auth.TokenAuthentication',
     ],
+    # for files
+    # 'DEFAULT_PARSER_CLASSES': (
+    #     'rest_framework.parsers.FormParser',
+    #     'rest_framework.parsers.MultiPartParser'
+    # ),
     # Pagination des reponses
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 20

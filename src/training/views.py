@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.decorators import action
 
 from rest_framework.viewsets import ModelViewSet
 
@@ -23,6 +24,7 @@ class TagModelViewSet(ModelViewSet):
 class TrainingModelViewSet(ModelViewSet):
     queryset = Training.objects.all()
     serializer_class = TrainingSerializer
-    parser_classes = (MultiPartParser, FormParser)
+    # parser_classes = (MultiPartParser, FormParser)
     #  permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
 
