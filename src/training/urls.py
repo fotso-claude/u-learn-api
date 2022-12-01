@@ -11,5 +11,5 @@ router.register(r'tags', TagModelViewSet, basename='tags')
 router.register(r'training', TrainingModelViewSet, basename='training')
 
 urlpatterns = [
-    path('/', include(router.urls)),
+    path(r'', include(router.urls)),
 ]
