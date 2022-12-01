@@ -37,7 +37,7 @@ class TrainingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Training
-        fields = ['name', 'description', 'duration', 'image_url', 'registered', 'status', 'category', 'tags']
+        fields = ['name', 'description', 'duration', 'price', 'image_url', 'registered', 'status', 'category', 'tags']
         extra_kwargs = {
             'name': {
                 'required': True,
