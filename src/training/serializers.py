@@ -44,6 +44,7 @@ class TrainingSerializer(serializers.ModelSerializer):
                 'validators': [UniqueValidator(queryset=Training.objects.all())],
             },
             'description': {'required': True},
+            'price': {'required': True},
             'duration': {'required': True},
             'image_url': {'required': False},
             'category': {'required': True},

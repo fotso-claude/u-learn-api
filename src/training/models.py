@@ -20,6 +20,7 @@ class Training(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     duration = models.FloatField(default=0.0)
+    price = models.FloatField(default=0.0)
     image_url = models.ImageField(upload_to=upload_to, blank=True, default="training/default.png")
     registered = models.IntegerField(default=0)
     status = models.CharField(
