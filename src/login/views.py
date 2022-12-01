@@ -18,6 +18,7 @@ class RegisterAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         user.set_password(user.password)
+        user.is_active = 1
         user.save()
         return Response({
             "user": AuthSerializer(user, context=self.get_serializer_context()).data,
