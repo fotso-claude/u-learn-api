@@ -5,12 +5,15 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from login.models import Auth
+from training.serializers import TrainingSerializer
 
 
 class AuthSerializer(serializers.ModelSerializer):
+    training = TrainingSerializer(many=True, read_only=True)
+
     class Meta:
         model = Auth
-        fields = ('id', 'username', 'email', 'role')
+        fields = ('id', 'username', 'email', 'role', 'training')
 
 
 class RegisterSerializer(serializers.ModelSerializer):

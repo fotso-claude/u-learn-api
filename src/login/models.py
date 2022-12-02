@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from training.models import Training
-
 
 class Auth(User):
     role = models.CharField(
@@ -10,7 +8,7 @@ class Auth(User):
         default="student"
     )
 
-    training = models.ManyToManyField(Training)
+    training = models.ManyToManyField('training.Training', related_name="training", blank=True)
 
     def __str__(self):
         return self.username
