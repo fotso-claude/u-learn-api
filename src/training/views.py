@@ -1,6 +1,4 @@
-from django.shortcuts import render
 from knox.auth import TokenAuthentication
-from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser, BasePermission, SAFE_METHODS
 
 from rest_framework.viewsets import ModelViewSet
@@ -16,21 +14,21 @@ class ReadOnly(BasePermission):
 
 class CategoryModelViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAdminUser | ReadOnly)
+    permission_classes = [IsAdminUser | ReadOnly]
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
 class TagModelViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAdminUser | ReadOnly)
+    permission_classes = [IsAdminUser | ReadOnly]
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
 
 class TrainingModelViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAdminUser | ReadOnly)
+    permission_classes = [IsAdminUser | ReadOnly]
     queryset = Training.objects.all()
     serializer_class = TrainingSerializer
     # parser_classes = (MultiPartParser, FormParser)
