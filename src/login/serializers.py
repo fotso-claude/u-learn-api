@@ -13,7 +13,7 @@ class AuthSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Auth
-        fields = ('id', 'username', 'email', 'role', 'training')
+        fields = ('id', 'name', 'username', 'email', 'role', 'training')
 
 
 class RegisterSerializer(serializers.ModelSerializer):
