@@ -29,6 +29,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = Auth
         fields = '__all__'
         extra_kwargs = {
+            'username': {'required': True},
             'last_name': {'required': True},
             'email': {'required': True},
             'password': {'required': True, 'write_only': True},
@@ -37,6 +38,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         def create(self, validated_data):
             user = Auth.objects.create(
                 username=validated_data['username'],
+                last_name=validated_data['last_name'],
                 email=validated_data['email'],
                 password=make_password(validated_data['password']),
             )
