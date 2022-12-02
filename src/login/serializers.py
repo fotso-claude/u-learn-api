@@ -29,7 +29,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = Auth
         fields = '__all__'
         extra_kwargs = {
-            'name': {'required': True},
+            'last_name': {'required': True},
             'email': {'required': True},
             'password': {'required': True, 'write_only': True},
         }
