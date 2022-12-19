@@ -40,6 +40,7 @@ class RegisterSerializer(serializers.ModelSerializer):
                 username=validated_data['username'],
                 last_name=validated_data['last_name'],
                 email=validated_data['email'],
+                is_active=1,
                 password=make_password(validated_data['password']),
             )
             user.save()
