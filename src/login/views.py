@@ -42,5 +42,5 @@ class LoginAPI(KnoxLoginView):
             "email": user.email,
             "role": user.role
         }
-        return Response({'datas': {temp_list.data}})
+        return Response({'datas': temp_list.data})
 
