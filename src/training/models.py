@@ -30,9 +30,15 @@ class Training(models.Model):
     )
 
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    chapters = models.ManyToManyField('Chapter', related_name='chapters', blank=True)
+    content_file = models.FileField(upload_to=upload_to, blank=True, default="training/default.pdf")
 
     def __str__(self):
         return self.name
+
+
+class Chapter(models.Model):
+    title = models.CharField(max_length=200)
 
 
 class Tag(models.Model):

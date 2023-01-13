@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from training.models import Training, Tag, Category
+from training.models import Training, Tag, Category, Chapter
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -31,13 +31,22 @@ class CategorySerializer(serializers.ModelSerializer):
         }
 
 
+class ChapterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chapter
+        fields = ['title']
+        extra_kwargs = {'title': {'required': True, }}
+
+
 class TrainingSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, read_only=True)
+
     # tags = serializers.SerializerMethodField(many=True)
 
     class Meta:
         model = Training
-        fields = ['name', 'description', 'duration', 'price', 'image_url', 'registered', 'status', 'category', 'tags']
+        fields = ['name', 'description', 'duration', 'price', 'image_url', 'registered', 'status', 'category', 'tags',
+                  'chapters']
         extra_kwargs = {
             'name': {
                 'required': True,
@@ -49,6 +58,7 @@ class TrainingSerializer(serializers.ModelSerializer):
             'image_url': {'required': False},
             'category': {'required': True},
             'tags': {'required': False},
+            'chapters' : {'required': False},
         }
 
     def validate_status(self, status):
@@ -76,4 +86,3 @@ class TrainingSerializer(serializers.ModelSerializer):
     # def get_tags(self, instance):
     #     queryset = instance.tags.filter
     #     return TagSerializer(instance.tags, many=True).data
-
