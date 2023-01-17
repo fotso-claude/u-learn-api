@@ -46,7 +46,7 @@ class TrainingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Training
         fields = ['name', 'description', 'duration', 'price', 'image_url', 'registered', 'status', 'category', 'tags',
-                  'chapters']
+                  'chapters', 'file_url']
         extra_kwargs = {
             'name': {
                 'required': True,
@@ -59,6 +59,7 @@ class TrainingSerializer(serializers.ModelSerializer):
             'category': {'required': True},
             'tags': {'required': False},
             'chapters': {'required': False},
+            'file_url': {'required': False},
         }
 
     def validate_status(self, status):
