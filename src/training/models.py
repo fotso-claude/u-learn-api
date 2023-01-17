@@ -21,7 +21,10 @@ class Training(models.Model):
     description = models.TextField()
     duration = models.FloatField(default=0.0)
     price = models.FloatField(default=0.0)
-    image_url = models.ImageField(upload_to=upload_to, blank=True, default="training/default.png")
+    image_url = models.ImageField(
+        upload_to=upload_to, blank=True, default="training/default.png")
+    file_url = models.FileField(
+        upload_to=upload_to, blank=True, default="training/default.pdf")
     registered = models.IntegerField(default=0)
     status = models.CharField(
         max_length=9,
@@ -30,8 +33,10 @@ class Training(models.Model):
     )
 
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    chapters = models.ManyToManyField('Chapter', related_name='chapters', blank=True)
-    content_file = models.FileField(upload_to=upload_to, blank=True, default="training/default.pdf")
+    chapters = models.ManyToManyField(
+        'Chapter', related_name='chapters', blank=True)
+    content_file = models.FileField(
+        upload_to=upload_to, blank=True, default="training/default.pdf")
 
     def __str__(self):
         return self.name
@@ -43,7 +48,8 @@ class Chapter(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
-    training = models.ManyToManyField('Training', related_name="tags", blank=True)
+    training = models.ManyToManyField(
+        'Training', related_name="tags", blank=True)
 
     def __str__(self):
         return self.name

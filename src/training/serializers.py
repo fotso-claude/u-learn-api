@@ -58,7 +58,7 @@ class TrainingSerializer(serializers.ModelSerializer):
             'image_url': {'required': False},
             'category': {'required': True},
             'tags': {'required': False},
-            'chapters' : {'required': False},
+            'chapters': {'required': False},
         }
 
     def validate_status(self, status):
